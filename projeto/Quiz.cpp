@@ -2,6 +2,7 @@
 #include <string>
 #include <locale.h>
 #include <vector>
+#include <fstream>
 
 #ifdef _WIN32
 #define CLEAR_COMMAND "CLS"
@@ -34,7 +35,7 @@ void opcoes() {
     cout << "[3] SAIR" << endl;
 
 
-    cout << "Escolha uma das op��es: ";
+    cout << "Escolha uma das opções: ";
     cin >> op1;
 }
 
@@ -59,6 +60,7 @@ void signIn() {
     }
 
     cout << "Nome de usu�rio ou senha inv�lidos." << endl;
+
     system("PAUSE");
 }
 
@@ -101,10 +103,42 @@ void signUp() {
 
 int main() {
     setlocale(LC_ALL, "");
+    
+    
 
     bool sair = false;
 
     while (!sair) {
+        int numero;
+
+    cout << "Digite um número: ";
+    cin >> numero;
+
+    // Abrindo o arquivo para escrita
+    ofstream arquivo("numero.txt");
+
+    if (arquivo.is_open()) {
+        arquivo << numero; // Escrevendo o número no arquivo
+        arquivo.close(); // Fechando o arquivo
+        cout << "Número armazenado com sucesso no arquivo 'numero.txt'." << endl;
+    } else {
+        cout << "Erro ao abrir o arquivo." << endl;
+    }
+     // Abrindo o arquivo para leitura
+    ifstream arquivoLeitura("numero.txt");
+
+    if (arquivoLeitura.is_open()) {
+        int numeroLido;
+        arquivoLeitura >> numeroLido; // Lendo o número do arquivo
+
+        arquivoLeitura.close(); // Fechando o arquivo
+
+        cout << "Número lido do arquivo: " << numeroLido << endl;
+         system("PAUSE");
+    } else {
+        cout << "Erro ao abrir o arquivo para leitura." << endl;
+        return 1; // Encerra o programa em caso de erro ao abrir o arquivo para leitura
+    }
 
 
 
@@ -112,7 +146,7 @@ int main() {
 
         if (op1 == 1) {
             signUp();
-        } else if (op1 == 2) {
+        } else if (op1 == 2) {g
             signIn();
         } else if (op1 == 3) {
             cout << "Saindo..." << endl;
